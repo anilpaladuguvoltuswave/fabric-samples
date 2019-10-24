@@ -1,17 +1,24 @@
 name: CI
 
-on: [push]
-
+on: 
+  push:
+    branches:
+    - master
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
+    - name: build
+      env:
+        DOCKER_HUB: ${{ secrets.DOCKERHUB }}
+        DOCKER_HUB_KEY: ${{ secrets.DOCKERHUB_KEY }}
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+        ls -l
+        echo 'Docker login'
+        docker login -u $DOCKERHUB -p $DOCKERHUB_KEY
+        echo 'Running build...'
+        docker build . -t shashidhar/entityservice:latest
+        echo 'Pushing image...'
+        docker push shashidhar/entityservice:latest
+        echo 'Done!'
