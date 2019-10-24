@@ -20,5 +20,5 @@ jobs:
         echo 'Running build...'
         docker build . -t shashidhar/entityservice:latest
         echo 'Pushing image...'
-        docker push shashidhar/entityservice:latest
+        docker push anilpaladuguvoltuswave/fabric-samples:latest
         echo 'Done!'
